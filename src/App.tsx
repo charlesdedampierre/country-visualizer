@@ -17,6 +17,7 @@ export default function App() {
   const [projection, setProjection] = useState<Projection>('globe');
   const [showLabels, setShowLabels] = useState(true);
   const [includeUndated, setIncludeUndated] = useState(false);
+  const [extendOpenEnded, setExtendOpenEnded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ w: 800, h: 600 });
 
@@ -56,7 +57,7 @@ export default function App() {
     for (const c of countries) {
       if (c.lat == null || c.lon == null) continue;
       if (selectedType !== '__all__' && !c.instance_labels.includes(selectedType)) continue;
-      if (!isActiveAtYear(c, year, includeUndated)) continue;
+      if (!isActiveAtYear(c, year, includeUndated, extendOpenEnded)) continue;
       out.push({
         qid: c.qid,
         label: c.label,
@@ -71,7 +72,7 @@ export default function App() {
       });
     }
     return out;
-  }, [countries, selectedType, year, includeUndated]);
+  }, [countries, selectedType, year, includeUndated, extendOpenEnded]);
 
   const stats = useMemo(() => {
     if (!countries) return null;
@@ -125,6 +126,17 @@ export default function App() {
               onChange={(e) => setIncludeUndated(e.target.checked)}
             />
             <span>Show entities with no dates</span>
+          </label>
+        </div>
+
+        <div className="field">
+          <label className="row">
+            <input
+              type="checkbox"
+              checked={extendOpenEnded}
+              onChange={(e) => setExtendOpenEnded(e.target.checked)}
+            />
+            <span>Extend entities with one missing date</span>
           </label>
         </div>
 

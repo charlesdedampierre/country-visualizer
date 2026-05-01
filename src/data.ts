@@ -92,14 +92,23 @@ export function instanceLabelCounts(countries: Country[]): { label: string; coun
     .sort((a, b) => b.count - a.count);
 }
 
-export function isActiveAtYear(c: Country, year: number, includeUndated = false): boolean {
+export function isActiveAtYear(
+  c: Country,
+  year: number,
+  includeUndated = false,
+  extendOpenEnded = false,
+): boolean {
   const a = c.inception_year, b = c.dissolved_year;
   // No date info -> only show if the user opted in.
   if (a == null && b == null) return includeUndated;
   // Both known -> bounded interval.
   if (a != null && b != null) return a <= year && year <= b;
-  // Only one date known: never extrapolate. Show only at that exact year.
-  return year === (a ?? b)!;
+  // Only inception known.
+  if (a != null) {
+    return extendOpenEnded ? year >= a : year === a;
+  }
+  // Only dissolved known.
+  return extendOpenEnded ? year <= b! : year === b!;
 }
 
 export function hasAnyDate(c: Country): boolean {

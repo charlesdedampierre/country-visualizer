@@ -92,30 +92,14 @@ export function instanceLabelCounts(countries: Country[]): { label: string; coun
     .sort((a, b) => b.count - a.count);
 }
 
-// Class labels that explicitly mark an entity as past / non-extant.
-// When dissolved is unknown but the entity is tagged with one of these,
-// we don't extend its lifespan to today.
-const PAST_HINT_RE = /\b(historical|ancient|former|extinct|fictional|abolished|defunct|medieval|prehistoric|disestablished|colonial)\b/i;
-
-function isPastClassed(c: Country): boolean {
-  return c.instance_labels.some((l) => PAST_HINT_RE.test(l));
-}
-
 export function isActiveAtYear(c: Country, year: number, includeUndated = false): boolean {
   const a = c.inception_year, b = c.dissolved_year;
   // No date info -> only show if the user opted in.
   if (a == null && b == null) return includeUndated;
-  // Both known -> straightforward bounded interval.
+  // Both known -> bounded interval.
   if (a != null && b != null) return a <= year && year <= b;
-  // Only inception known.
-  if (a != null) {
-    // If the entity is explicitly historical/former/etc., don't extend past inception.
-    if (isPastClassed(c)) return year === a;
-    // Otherwise treat as still extant: active from inception onward.
-    return year >= a;
-  }
-  // Only dissolved known.
-  return year === b!;
+  // Only one date known: never extrapolate. Show only at that exact year.
+  return year === (a ?? b)!;
 }
 
 export function hasAnyDate(c: Country): boolean {

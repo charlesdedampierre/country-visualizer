@@ -9,8 +9,8 @@ type Projection = 'globe' | 'mercator';
 export default function App() {
   const [countries, setCountries] = useState<Country[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<string>('country');
-  const [year, setYear] = useState<number>(2000);
+  const [selectedType, setSelectedType] = useState<string>('historical country');
+  const [year, setYear] = useState<number>(-224);
   const [hovered, setHovered] = useState<MapPoint | null>(null);
   const [mouse, setMouse] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [playing, setPlaying] = useState(false);

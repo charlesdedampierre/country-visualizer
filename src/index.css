@@ -105,21 +105,22 @@ select:focus, input[type="text"]:focus { border-color: #4865ff; }
 .tooltip {
   position: absolute;
   pointer-events: none;
-  background: rgba(17, 20, 25, 0.94);
+  background: rgba(17, 20, 25, 0.96);
   border: 1px solid #2a313c;
-  border-radius: 8px;
-  padding: 10px 12px;
-  max-width: 320px;
-  font-size: 12px;
+  border-radius: 10px;
+  padding: 16px 20px;
+  max-width: 460px;
+  min-width: 260px;
+  font-size: 14px;
   color: #e6e8ec;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.55);
   z-index: 20;
-  transform: translate(12px, 12px);
+  transform: translate(14px, 14px);
 }
-.tooltip .name { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
-.tooltip .meta { color: #8a93a3; font-size: 11px; margin-bottom: 6px; }
-.tooltip .desc { color: #cdd2dc; line-height: 1.4; }
-.tooltip a { color: #7e95ff; text-decoration: none; }
+.tooltip .name { font-weight: 600; font-size: 17px; margin-bottom: 6px; }
+.tooltip .meta { color: #8a93a3; font-size: 13px; margin-bottom: 10px; }
+.tooltip .desc { color: #d0d5df; line-height: 1.55; font-size: 14px; }
+.tooltip a { color: #8aa1ff; text-decoration: none; font-size: 13px; }
 .tooltip a:hover { text-decoration: underline; }
 
 .stat { font-size: 11px; color: #8a93a3; }
